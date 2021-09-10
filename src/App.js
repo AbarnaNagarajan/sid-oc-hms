@@ -10,7 +10,7 @@ const loading = () => (
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter  basename={'/sid-oc-hms/'}>
       <Suspense fallback={loading()}>
         <Switch>
           <Route
