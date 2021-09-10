@@ -1,0 +1,36 @@
+{
+  "files": {
+    "static/js/0.5b364294.chunk.js": "/sid-oc-hms/static/js/0.5b364294.chunk.js",
+    "static/js/0.5b364294.chunk.js.map": "/sid-oc-hms/static/js/0.5b364294.chunk.js.map",
+    "main.css": "/sid-oc-hms/static/css/main.ed2662fb.chunk.css",
+    "main.js": "/sid-oc-hms/static/js/main.cd96013c.chunk.js",
+    "main.js.map": "/sid-oc-hms/static/js/main.cd96013c.chunk.js.map",
+    "runtime-main.js": "/sid-oc-hms/static/js/runtime-main.208881ee.js",
+    "runtime-main.js.map": "/sid-oc-hms/static/js/runtime-main.208881ee.js.map",
+    "static/js/3.f4ca0e1d.chunk.js": "/sid-oc-hms/static/js/3.f4ca0e1d.chunk.js",
+    "static/js/3.f4ca0e1d.chunk.js.map": "/sid-oc-hms/static/js/3.f4ca0e1d.chunk.js.map",
+    "static/js/4.bd80fe6d.chunk.js": "/sid-oc-hms/static/js/4.bd80fe6d.chunk.js",
+    "static/js/4.bd80fe6d.chunk.js.map": "/sid-oc-hms/static/js/4.bd80fe6d.chunk.js.map",
+    "static/js/5.b7e4d06b.chunk.js": "/sid-oc-hms/static/js/5.b7e4d06b.chunk.js",
+    "static/js/5.b7e4d06b.chunk.js.map": "/sid-oc-hms/static/js/5.b7e4d06b.chunk.js.map",
+    "static/js/6.90c1625a.chunk.js": "/sid-oc-hms/static/js/6.90c1625a.chunk.js",
+    "static/js/6.90c1625a.chunk.js.map": "/sid-oc-hms/static/js/6.90c1625a.chunk.js.map",
+    "static/js/7.08b18bd2.chunk.js": "/sid-oc-hms/static/js/7.08b18bd2.chunk.js",
+    "static/js/7.08b18bd2.chunk.js.map": "/sid-oc-hms/static/js/7.08b18bd2.chunk.js.map",
+    "static/js/8.633fbc37.chunk.js": "/sid-oc-hms/static/js/8.633fbc37.chunk.js",
+    "static/js/8.633fbc37.chunk.js.map": "/sid-oc-hms/static/js/8.633fbc37.chunk.js.map",
+    "static/js/9.81413f96.chunk.js": "/sid-oc-hms/static/js/9.81413f96.chunk.js",
+    "static/js/9.81413f96.chunk.js.map": "/sid-oc-hms/static/js/9.81413f96.chunk.js.map",
+    "index.html": "/sid-oc-hms/index.html",
+    "static/css/main.ed2662fb.chunk.css.map": "/sid-oc-hms/static/css/main.ed2662fb.chunk.css.map",
+    "static/js/3.f4ca0e1d.chunk.js.LICENSE.txt": "/sid-oc-hms/static/js/3.f4ca0e1d.chunk.js.LICENSE.txt",
+    "static/js/4.bd80fe6d.chunk.js.LICENSE.txt": "/sid-oc-hms/static/js/4.bd80fe6d.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/sid-oc-hms/static/media/STETHO.620dd12d.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.208881ee.js",
+    "static/js/3.f4ca0e1d.chunk.js",
+    "static/css/main.ed2662fb.chunk.css",
+    "static/js/main.cd96013c.chunk.js"
+  ]
+}
