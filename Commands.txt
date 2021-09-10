@@ -1,0 +1,127 @@
+1. npx create-react-app hms-soc
+2. npm start
+3. npm update
+4. npm install
+5. npm install @fortawesome/react-fontawesome @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons
+6. npm install @material-ui/core @material-ui/icons @material-ui/lab
+7. npm install react-select
+8. npm i mui-datatables
+9. npm install @material-ui/data-grid
+
+Download Git bash 
+
+AbarnaNagarajan12
+GitAbar@123
+HMS
+https://github.com/AbarnaNagarajan/HMS
+
+wdsi@Panneer MINGW64 ~
+$ cd'/f/Abarna/Source Codes/SID/HMS/hms-soc'
+
+wdsi@Panneer MINGW64 ~
+$ git config --global user.name "AbarnaNagarajan"
+
+wdsi@Panneer MINGW64 ~
+$ git config --global user.email "abarna.cse14@gmail.com"
+
+wdsi@Panneer MINGW64 ~
+$ git clone https://github.com/AbarnaNagarajan/HMS
+
+//////inbetween it will ask for the username and password for github////////
+
+Cloning into 'HMS'...
+fatal: Response status code does not indicate success: 401 (Unauthorized).
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+wdsi@Panneer MINGW64 ~
+$ cd HMS
+(new clone repo)
+
+wdsi@Panneer MINGW64 ~
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .gitignore
+        package-lock.json
+        package.json
+        public/
+        src/
+
+wdsi@Panneer MINGW64 ~
+$ git add .
+warning: LF will be replaced by CRLF in .gitignore.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in package-lock.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in package.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in public/index.html.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in public/manifest.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in public/robots.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/App.css.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/App.js.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/App.test.js.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/index.css.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/index.js.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/reportWebVitals.js.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/setupTests.js.
+The file will have its original line endings in your working directory
+
+wdsi@Panneer MINGW64 ~
+$ git commit -m "Base Commit on - 05.08.2021"
+[main 3684d6d] Base Commit on - 05.08.2021
+ 19 files changed, 17240 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 public/favicon.ico
+ create mode 100644 public/index.html
+ create mode 100644 public/logo192.png
+ create mode 100644 public/logo512.png
+ create mode 100644 public/manifest.json
+ create mode 100644 public/robots.txt
+ create mode 100644 src/App.css
+ create mode 100644 src/App.js
+ create mode 100644 src/App.test.js
+ create mode 100644 src/Dashboard/Dashboard.js
+ create mode 100644 src/Layouts/MainLayout.js
+ create mode 100644 src/index.css
+ create mode 100644 src/index.js
+ create mode 100644 src/logo.svg
+ create mode 100644 src/reportWebVitals.js
+ create mode 100644 src/setupTests.js
+
+wdsi@Panneer MINGW64 /f/Abarna/Source Codes/SID/HMS/HMS (main)
+$ git push origin HEAD:master
+Enumerating objects: 26, done.
+Counting objects: 100% (26/26), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (23/23), done.
+Writing objects: 100% (25/25), 194.40 KiB | 6.27 MiB/s, done.
+Total 25 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/AbarnaNagarajan/HMS/pull/new/master
+remote:
+To https://github.com/AbarnaNagarajan/HMS
+ * [new branch]      HEAD -> master
+
+
+
+
+
