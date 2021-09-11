@@ -1,26 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import { Redirect } from "react-router";
-import { Grid, Container } from "@material-ui/core";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { Grid } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -58,25 +46,11 @@ const patientIds = [
 
 export default function DialogSelect() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [redirectAppointment, setRedirectAppointment] = React.useState(false);
-  const [age, setAge] = React.useState("");
   const [patientId, setPatientId] = React.useState("");
-  const [state, setState] = React.useState({
-    age: "",
-    name: "hai",
-  });
 
   const handleChange = (event) => {
-    setAge(Number(event.target.value) || "");
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    setPatientId(event.target.value);
   };
 
   function createData(name, calories, fat, carbs, protein) {
@@ -171,26 +145,19 @@ export default function DialogSelect() {
               />
             </Grid>
             <Grid item xs={3}>
-              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button
-                onClick={handleClickOpen}
+                onClick={() => setRedirectAppointment(true)}
                 style={{ background: "#3f51b5", color: "white" }}
               >
                 Book
               </Button>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button
-                onClick={handleClickOpen}
+                onClick={() => setRedirectAppointment(true)}
                 style={{ background: "brown", color: "white" }}
               >
                 Cancel
-              </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button
-                onClick={() => setRedirectAppointment(true)}
-                style={{ background: "#3f51b5", color: "white" }}
-              >
-                Return
               </Button>
             </Grid>
             <Grid item xs={3}></Grid>
@@ -238,49 +205,6 @@ export default function DialogSelect() {
           ))}
         </TableBody>
       </Table>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Fill the form</DialogTitle>
-        <DialogContent>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-              <Select
-                native
-                value={age}
-                onChange={handleChange}
-                input={<Input id="demo-dialog-native" />}
-              >
-                <option aria-label="None" value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-dialog-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={age}
-                onChange={handleChange}
-                input={<Input />}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
       {redirectAppointment ? (
         <Redirect from="/Appointment" to="/OPGrid" />
       ) : null}

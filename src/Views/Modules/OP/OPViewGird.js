@@ -294,7 +294,7 @@ export default function QuickFilteringGrid() {
             id={idDetails}
             variant="outlined"
             color="secondary"
-            onClick={openPatientDetailsDialog}
+            onClick={() => openPatientDetailsDialog(idDetails)}
           >
             {details}
           </Button>
@@ -315,7 +315,7 @@ export default function QuickFilteringGrid() {
             id={idDetails}
             variant="outlined"
             color="primary"
-            onClick={openRedirectAppointment}
+            onClick={() => openRedirectAppointment(idDetails)}
           >
             {details}
           </Button>
