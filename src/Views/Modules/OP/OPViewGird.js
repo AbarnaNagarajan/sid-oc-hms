@@ -50,7 +50,7 @@ const useStyles = makeStyles(
       padding: "8px 8px 0px",
       fontFamily: "serif",
       fontSize: "25px",
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
   }),
   { defaultTheme }
@@ -242,6 +242,7 @@ export default function QuickFilteringGrid() {
   const [rows, setRows] = React.useState(dataRows);
   const [openPatientDetails, setOpenPatientDetails] = React.useState(false);
   const [redirectAppointment, setRedirectAppointment] = React.useState(false);
+  const [patientDialogDetails, setPatientDialogDetails] = React.useState();
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
     const searchRegex = new RegExp(escapeRegExp(searchValue), "i");
@@ -281,22 +282,21 @@ export default function QuickFilteringGrid() {
       width: 200,
     },
     {
-      field: "patientdetails",
+      field: "",
       headerName: "Patient Details",
       width: 170,
       disableClickEventBubbling: true,
       renderCell: (params) => {
-        const details = params.value;
         const idDetails = params.id;
-
+        const rowDetails = params.api;
         return (
           <Button
-            id={idDetails}
+            id={idDetails + "_detailsDialog"}
             variant="outlined"
             color="secondary"
-            onClick={() => openPatientDetailsDialog(idDetails)}
+            onClick={() => openPatientDetailsDialog(rowDetails, params)}
           >
-            {details}
+            Details
           </Button>
         );
       },
@@ -307,29 +307,34 @@ export default function QuickFilteringGrid() {
       width: 170,
       disableClickEventBubbling: true,
       renderCell: (params) => {
-        const details = params.value;
         const idDetails = params.id;
-
+        const rowDetails = params.api;
         return (
           <Button
-            id={idDetails}
+            id={idDetails + "_appointment"}
             variant="outlined"
             color="primary"
-            onClick={() => openRedirectAppointment(idDetails)}
+            onClick={() => openRedirectAppointment(rowDetails, params)}
           >
-            {details}
+            Book
           </Button>
         );
       },
     },
   ];
 
-  const openPatientDetailsDialog = () => {
+  const openPatientDetailsDialog = (event, params) => {
+    setPatientDialogDetails(params.row);
+    console.log("Row Data : " + JSON.stringify(params.row));
     setOpenPatientDetails(true);
   };
 
-  const openRedirectAppointment = () => {
+  const openRedirectAppointment = (e, params) => {
     setRedirectAppointment(true);
+  };
+
+  const handleCloseDialog = (e) => {
+    setOpenPatientDetails(false);
   };
 
   React.useEffect(() => {
@@ -352,7 +357,11 @@ export default function QuickFilteringGrid() {
         }}
       />
       {openPatientDetails ? (
-        <PatientDetails openAction={openPatientDetails} patientName={""} />
+        <PatientDetails
+          openAction={openPatientDetails}
+          patientDialogDetails={patientDialogDetails}
+          handleCloseDialog={handleCloseDialog}
+        />
       ) : null}
       {redirectAppointment ? (
         <Redirect from="/OPGrid" to="/Appointment" />
