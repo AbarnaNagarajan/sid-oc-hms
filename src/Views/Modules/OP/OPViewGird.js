@@ -114,7 +114,17 @@ function createData(
   address,
   lastCheckUp,
   patientdetails,
-  appointment
+  appointment,
+  firstName,
+  lastName,
+  age,
+  altContactNumber,
+  maritalStatus,
+  gender,
+  bloodGroup,
+  physician,
+  registeredDate,
+  registeredBy
 ) {
   return {
     id,
@@ -125,6 +135,16 @@ function createData(
     lastCheckUp,
     patientdetails,
     appointment,
+    firstName,
+    lastName,
+    age,
+    altContactNumber,
+    maritalStatus,
+    gender,
+    bloodGroup,
+    physician,
+    registeredDate,
+    registeredBy,
   };
 }
 
@@ -143,7 +163,17 @@ const dataRows = [
     "RMD",
     "2021-01-01",
     "New",
-    "Book"
+    "Book",
+    "CHO",
+    "Cupcake",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     2,
@@ -153,7 +183,17 @@ const dataRows = [
     "SLM",
     "2021-02-01",
     "Old",
-    "Book"
+    "Book",
+    "CHO",
+    "Kitkat",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     3,
@@ -163,7 +203,17 @@ const dataRows = [
     "RMS",
     "2021-03-01",
     "In Process",
-    "Book"
+    "Book",
+    "CHO",
+    "Munch",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     4,
@@ -173,7 +223,17 @@ const dataRows = [
     "CHE",
     "2021-04-01",
     "New",
-    "Book"
+    "Book",
+    "CHO",
+    "Dairy Milk",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     5,
@@ -183,7 +243,17 @@ const dataRows = [
     "CBE",
     "2021-05-01",
     "Old",
-    "Book"
+    "Book",
+    "CHO",
+    "Five Star",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     6,
@@ -193,7 +263,17 @@ const dataRows = [
     "TNL",
     "2021-06-01",
     "In Process",
-    "Book"
+    "Book",
+    "CHO",
+    "Milky Bar",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     7,
@@ -203,7 +283,17 @@ const dataRows = [
     "THJ",
     "2021-07-01",
     "New",
-    "Book"
+    "Book",
+    "CHO",
+    "Perk",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     8,
@@ -213,7 +303,17 @@ const dataRows = [
     "NML",
     "2021-08-01",
     "Old",
-    "Book"
+    "Book",
+    "CHO",
+    "Doughnut",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     9,
@@ -223,7 +323,17 @@ const dataRows = [
     "ERD",
     "2021-09-01",
     "In Process",
-    "Book"
+    "Book",
+    "CHO",
+    "Ice Cream",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
   createData(
     10,
@@ -233,7 +343,17 @@ const dataRows = [
     "MDU",
     "2021-10-01",
     "New",
-    "Book"
+    "Book",
+    "CHO",
+    "Honey Cake",
+    15,
+    "1564654545",
+    "single",
+    "Male",
+    "A+",
+    "Dr.Anand.R",
+    "2021-01-01",
+    "admin"
   ),
 ];
 
@@ -320,6 +440,66 @@ export default function QuickFilteringGrid() {
           </Button>
         );
       },
+    },
+    {
+      field: "firstName",
+      headerName: "firstName",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "lastName",
+      headerName: "lastName",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "age",
+      headerName: "age",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "altContactNumber",
+      headerName: "altContactNumber",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "maritalStatus",
+      headerName: "maritalStatus",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "gender",
+      headerName: "gender",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "bloodGroup",
+      headerName: "bloodGroup",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "physician",
+      headerName: "physician",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "registeredDate",
+      headerName: "registeredDate",
+      width: 100,
+      hide: true,
+    },
+    {
+      field: "registeredBy",
+      headerName: "registeredBy",
+      width: 100,
+      hide: true,
     },
   ];
 
