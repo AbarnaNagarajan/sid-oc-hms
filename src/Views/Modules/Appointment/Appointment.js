@@ -181,7 +181,7 @@ export default function DialogSelect() {
         </Grid>
       </form>
       <Table className={classes.table} aria-label="caption table">
-        <caption>A basic table example with a caption</caption>
+        {/* <caption>A basic table example with a caption</caption> */}
         <TableHead>
           <TableRow>
             <TableCell>Dessert (100g serving)</TableCell>
