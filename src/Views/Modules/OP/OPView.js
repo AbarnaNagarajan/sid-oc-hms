@@ -56,8 +56,8 @@ const useStyles = makeStyles(
     patientDialog: {
       maxWidth: "1300px",
       width: "1410px",
-      marginLeft: "265px",
-      marginTop: "100px",
+      marginLeft: "25px",
+      marginTop: "75px",
       marginBottom: "75px",
       height: "600px",
       borderRadius: "15px",
@@ -212,14 +212,14 @@ function PatientInfo(patientDialogDetails) {
 function PatientPrescription(patientDialogDetails) {
   const dialogClasses = useStyles();
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  function createData(id, prescription, prescribedBy, prescribedDate) {
+    return { id, prescription, prescribedBy, prescribedDate };
   }
 
   const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
+    createData(1, "Prescribe", "Dr.Ananad", "2021-01-01"),
+    createData(2, "Prescribe", "Dr.Ananad", "2021-01-02"),
+    createData(3, "Prescribe", "Dr.Ananad", "2021-01-03"),
   ];
   return (
     <Grid container spacing={1} style={{ padding: "25px" }}>
@@ -270,23 +270,21 @@ function PatientPrescription(patientDialogDetails) {
         {/* <caption>A basic table example with a caption</caption> */}
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell align="right">Prescription</TableCell>
+            <TableCell align="right">Prescribed By</TableCell>
+            <TableCell align="right">Prescribed Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.prescription}</TableCell>
+              <TableCell align="right">{row.prescribedBy}</TableCell>
+              <TableCell align="right">{row.prescribedDate}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -308,6 +306,24 @@ function onFileChangeEPOD(event, uploadid, lrid, id, podfilepath) {
     console.log("onFileChangeEPOD", err);
   }
 }
+const genders = [
+  {
+    value: 0,
+    label: "Please Select",
+  },
+  {
+    value: 1,
+    label: "Male",
+  },
+  {
+    value: 2,
+    label: "Female",
+  },
+  {
+    value: 3,
+    label: "Third Gender",
+  },
+];
 function PatientReports(patientDialogDetails) {
   const StyledTableCellUpload = withStyles((theme) => ({
     head: {
@@ -324,7 +340,15 @@ function PatientReports(patientDialogDetails) {
       padding: "10px",
     },
   }))(TableCell);
-
+  const handleChange = (event, id) => {
+    id === 1
+      ? setGender(event.target.value)
+      : id === 2
+      ? setGender(event.target.value)
+      : id === 3
+      ? setGender(event.target.value)
+      : setGender(event.target.value);
+  };
   const StyledTableRow = withStyles((theme) => ({
     root: {
       "&:nth-of-type(odd)": {
@@ -336,6 +360,7 @@ function PatientReports(patientDialogDetails) {
   const [imageviewcomment, setimageviewcomment] = useState(false);
   const [imageurl, setimageurl] = useState("");
   const [epodUploadNewRowAlert, setEpodUploadNewRowAlert] = useState("");
+  const [gender, setGender] = useState("0");
   const [EpodUploadCount, setEpodUploadCount] = useState([
     {
       podfilepath: "",
@@ -357,72 +382,102 @@ function PatientReports(patientDialogDetails) {
 
   return (
     <Grid container spacing={1} style={{ padding: "25px" }}>
-      <TableContainer
-        component={Paper}
-        style={{ marginLeft: "0px", marginRight: "2px" }}
+      <br />
+      <label
+        style={{
+          fontSize: "15px",
+          padding: "4px 4px 0px",
+          flex: "1 1 100%",
+          fontWeight: "bold",
+          fontFamily: "serif",
+        }}
       >
-        <Table aria-label="customized table" size="medium">
-          <TableHead></TableHead>
-          <TableBody>
-            {EpodUploadCount && EpodUploadCount.length > 0
-              ? EpodUploadCount.map((ls, index) => (
-                  <StyledTableRow key={index}>
-                    <StyledTableCellUpload align="left">
-                      {ls.podfilepath != "" ? (
-                        <img
-                          style={{
-                            width: "80px",
-                            height: "80px",
-                            borderStyle: "outset",
-                            borderWidth: "thin",
-                          }}
-                          id={"epodImg"}
-                          src={ls.podfilepath}
-                          onClick={(e) => viewfile(ls.podfilepath)}
-                          alt=""
-                          key={ls.id}
-                        />
-                      ) : (
-                        <img
-                          style={{
-                            width: "80px",
-                            height: "80px",
-                            borderStyle: "outset",
-                            borderWidth: "thin",
-                          }}
-                          id={"epodImg"}
-                          src={noimage}
-                          onClick={(e) => viewfile(noimage)}
-                          alt=""
-                          key={ls.uploadid}
-                        />
-                      )}
-                    </StyledTableCellUpload>
-                    <StyledTableCellUpload align="left">
-                      {ls.podfilepath != "" && ls.Id != 0 ? (
-                        <div>
-                          <Button
-                            id={"epodImgDelete"}
-                            onClick={(e) =>
-                              EPODfileDelete(e, ls.uploadid, ls.Lrid, ls.Id)
-                            }
-                            variant="contained"
-                            color="primary"
+        Upload New Report
+      </label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Grid container item xs={12} spacing={1}>
+        <TableContainer
+          component={Paper}
+          style={{ marginLeft: "0px", marginRight: "2px" }}
+        >
+          <Table aria-label="customized table" size="medium">
+            <TableHead>
+              {/* <StyledTableRow>
+                <StyledTableCellUpload align="left">
+                  <label>View Reports</label>
+                </StyledTableCellUpload>
+                <StyledTableCellUpload align="left">
+                  <label>Upload Reports</label>
+                </StyledTableCellUpload>
+              </StyledTableRow> */}
+            </TableHead>
+            <TableBody>
+              {EpodUploadCount && EpodUploadCount.length > 0
+                ? EpodUploadCount.map((ls, index) => (
+                    <StyledTableRow key={index}>
+                      <StyledTableCellUpload align="left">
+                        {ls.podfilepath != "" ? (
+                          <img
                             style={{
-                              fontSize: "10px",
-                              outline: "none",
-                              color: "#FFFFFF",
-                              background: "#190F4C",
-                              borderRadius: "25px",
-                              height: "25px",
+                              width: "80px",
+                              height: "80px",
+                              borderStyle: "outset",
+                              borderWidth: "thin",
                             }}
-                            component="span"
+                            id={"epodImg"}
+                            src={ls.podfilepath}
+                            onClick={(e) => viewfile(ls.podfilepath)}
+                            alt=""
+                            key={ls.id}
+                          />
+                        ) : (
+                          <img
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              borderStyle: "outset",
+                              borderWidth: "thin",
+                            }}
+                            id={"epodImg"}
+                            src={noimage}
+                            onClick={(e) => viewfile(noimage)}
+                            alt=""
+                            key={ls.uploadid}
+                          />
+                        )}
+                      </StyledTableCellUpload>
+                      <StyledTableCellUpload align="left">
+                        {ls.podfilepath != "" ? (
+                          <label
+                            style={{
+                              fontSize: "15px",
+                              padding: "4px 4px 0px",
+                              flex: "1 1 100%",
+                              fontWeight: "bold",
+                              fontFamily: "serif",
+                            }}
                           >
-                            Delete
-                          </Button>
-                        </div>
-                      ) : (
-                        <div>
+                            X-ray Report
+                          </label>
+                        ) : (
+                          <label
+                            style={{
+                              fontSize: "15px",
+                              padding: "4px 4px 0px",
+                              flex: "1 1 100%",
+                              fontWeight: "bold",
+                              fontFamily: "serif",
+                            }}
+                          >
+                            X-ray Report
+                          </label>
+                        )}
+                      </StyledTableCellUpload>
+                      <StyledTableCellUpload
+                        align="left"
+                        style={{ width: "105px" }}
+                      >
+                        {ls.podfilepath != "" ? (
                           <input
                             type="file"
                             accept="image/png, image/jpeg, image/jpg"
@@ -438,54 +493,219 @@ function PatientReports(patientDialogDetails) {
                               )
                             }
                           />
-                        </div>
-                      )}
-                    </StyledTableCellUpload>
-                  </StyledTableRow>
-                ))
-              : null}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                        ) : (
+                          <input
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg"
+                            id={"epodupload" + index}
+                            key={index}
+                            onChange={(e) =>
+                              onFileChangeEPOD(
+                                e,
+                                ls.uploadid,
+                                ls.Lrid,
+                                ls.Id,
+                                ls.podfilepath
+                              )
+                            }
+                          />
+                        )}
+                      </StyledTableCellUpload>
+                    </StyledTableRow>
+                  ))
+                : null}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label
+        style={{
+          fontSize: "15px",
+          padding: "4px 4px 0px",
+          flex: "1 1 100%",
+          fontWeight: "bold",
+          fontFamily: "serif",
+        }}
+      >
+        Reports History
+      </label>
+      <Grid container item xs={12} spacing={1}>
+        <TableContainer
+          component={Paper}
+          style={{ marginLeft: "0px", marginRight: "2px" }}
+        >
+          <Table aria-label="customized table" size="medium">
+            <TableHead>
+              {/* <StyledTableRow>
+                <StyledTableCellUpload align="left">
+                  <label>View Reports</label>
+                </StyledTableCellUpload>
+                <StyledTableCellUpload align="left">
+                  <label>Upload Reports</label>
+                </StyledTableCellUpload>
+              </StyledTableRow> */}
+            </TableHead>
+            <TableBody>
+              {EpodUploadCount && EpodUploadCount.length > 0
+                ? EpodUploadCount.map((ls, index) => (
+                    <StyledTableRow key={index}>
+                      <StyledTableCellUpload align="left">
+                        {ls.podfilepath != "" ? (
+                          <img
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              borderStyle: "outset",
+                              borderWidth: "thin",
+                            }}
+                            id={"epodImg"}
+                            src={ls.podfilepath}
+                            onClick={(e) => viewfile(ls.podfilepath)}
+                            alt=""
+                            key={ls.id}
+                          />
+                        ) : (
+                          <img
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              borderStyle: "outset",
+                              borderWidth: "thin",
+                            }}
+                            id={"epodImg"}
+                            src={noimage}
+                            onClick={(e) => viewfile(noimage)}
+                            alt=""
+                            key={ls.uploadid}
+                          />
+                        )}
+                      </StyledTableCellUpload>
+                      <StyledTableCellUpload align="left">
+                        {ls.podfilepath != "" ? (
+                          <label
+                            style={{
+                              fontSize: "15px",
+                              padding: "4px 4px 0px",
+                              flex: "1 1 100%",
+                              fontWeight: "bold",
+                              fontFamily: "serif",
+                            }}
+                          >
+                            X-ray Report
+                          </label>
+                        ) : (
+                          <label
+                            style={{
+                              fontSize: "15px",
+                              padding: "4px 4px 0px",
+                              flex: "1 1 100%",
+                              fontWeight: "bold",
+                              fontFamily: "serif",
+                            }}
+                          >
+                            X-ray Report
+                          </label>
+                        )}
+                      </StyledTableCellUpload>
+                      <StyledTableCellUpload
+                        align="left"
+                        style={{ width: "275px" }}
+                      >
+                        {ls.podfilepath != "" ? (
+                          <Button
+                            style={{
+                              color: "White",
+                              fontWeight: "inherit",
+                              fontFamily: "emoji",
+                              fontSize: "small",
+                              backgroundColor: "red",
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        ) : (
+                          <Button
+                            style={{
+                              color: "White",
+                              fontWeight: "inherit",
+                              fontFamily: "emoji",
+                              fontSize: "small",
+                              backgroundColor: "red",
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        )}
+                      </StyledTableCellUpload>
+                    </StyledTableRow>
+                  ))
+                : null}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
     </Grid>
   );
 }
 
 function PatientAppointmentHistory(patientDialogDetails) {
   const classes = useStyles();
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  const dialogActionClass = { fontWeight: "bold", fontFamily: "initial" };
+  function createData(bookedDate, bookedBy, date, checkUpBy, remarks) {
+    return { bookedDate, bookedBy, date, checkUpBy, remarks };
   }
 
   const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
+    createData("2021-01-01", "admin", "2021-01-02", "Dr.Anand", "Follow Up"),
+    createData("2021-01-02", "admin", "2021-01-03", "Dr.Anand", "Follow Up"),
+    createData("2021-01-03", "admin", "2021-01-04", "Dr.Anand", "Follow Up"),
   ];
 
   return (
     <Grid container spacing={1} style={{ padding: "25px" }}>
+      <label
+        style={{
+          fontSize: "15px",
+          padding: "4px 4px 0px",
+          flex: "1 1 100%",
+          fontWeight: "bold",
+          fontFamily: "serif",
+        }}
+      >
+        Appointments History
+      </label>
       <Table className={classes.table} aria-label="caption table">
         {/* <caption>A basic table example with a caption</caption> */}
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell style={dialogActionClass}>
+              Appointment Booked Date
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Appointment Booked By
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Appointment Date
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Check Up Done By
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Remarks
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.bookedDate}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.bookedDate}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.bookedBy}</TableCell>
+              <TableCell align="right">{row.date}</TableCell>
+              <TableCell align="right">{row.checkUpBy}</TableCell>
+              <TableCell align="right">{row.remarks}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -9,6 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -48,19 +49,25 @@ export default function DialogSelect() {
   const classes = useStyles();
   const [redirectAppointment, setRedirectAppointment] = React.useState(false);
   const [patientId, setPatientId] = React.useState("");
-
+  const dialogActionClass = { fontWeight: "bold", fontFamily: "initial" };
   const handleChange = (event) => {
     setPatientId(event.target.value);
   };
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  function createData(
+    patientID,
+    patientName,
+    appointmentDate,
+    remarks,
+    physician
+  ) {
+    return { patientID, patientName, appointmentDate, remarks, physician };
   }
 
   const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
+    createData("SOC01", "Eclair", "2021-01-04", "Follow Up", "Dr.Anand"),
+    createData("SOC02", "KitKat", "2021-01-03", "Follow Up", "Dr.Anand"),
+    createData("SOC03", "Munch", "2021-01-02", "Follow Up", "Dr.Anand"),
   ];
 
   return (
@@ -88,24 +95,17 @@ export default function DialogSelect() {
             spacing={1}
             style={{ padding: "15px", background: "#d7f4ff" }}
           >
-            <Grid
-              item
-              xs={3}
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <label
-                style={{
-                  fontSize: "20px",
-                  padding: "4px 4px 0px",
-                  flex: "1 1 100%",
-                  fontWeight: "bold",
-                  fontFamily: "serif",
+            <Grid item xs={3}>
+              <TextField
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
                 }}
-              >
-                Patient Details
-              </label>
+              />
             </Grid>
             <Grid item xs={3}>
               <TextField
@@ -134,16 +134,44 @@ export default function DialogSelect() {
             </Grid>
             <Grid item xs={3}>
               <TextField
-                id="datetime-local"
-                label="Next appointment"
-                type="datetime-local"
-                defaultValue="2017-05-24T10:30"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
+                variant="outlined"
+                label="Remarks"
+                id="standard-start-adornment"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start"></InputAdornment>
+                  ),
                 }}
               />
             </Grid>
+            <Grid item xs={3}>
+              <TextField
+                variant="outlined"
+                id="standard-patient-id"
+                select
+                label="Physician"
+                value={patientId}
+                onChange={(e) => handleChange(e, 1)}
+                SelectProps={{
+                  native: true,
+                }}
+                style={{ width: "230px" }}
+                helperText=""
+              >
+                {patientIds.map((option) => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    style={{ width: "230px", fontSize: "small" }}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={3}></Grid>
             <Grid item xs={3}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button
@@ -160,7 +188,6 @@ export default function DialogSelect() {
                 Cancel
               </Button>
             </Grid>
-            <Grid item xs={3}></Grid>
           </Grid>
           <Grid container item xs={13} spacing={1}>
             <div style={{ width: "100%", color: "#fff" }}>.</div>
@@ -184,23 +211,31 @@ export default function DialogSelect() {
         {/* <caption>A basic table example with a caption</caption> */}
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell style={dialogActionClass}>PatientID</TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              PatientName
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              AppointmentDate
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Remarks
+            </TableCell>
+            <TableCell align="right" style={dialogActionClass}>
+              Physician
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.patientID}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.patientID}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.patientName}</TableCell>
+              <TableCell align="right">{row.appointmentDate}</TableCell>
+              <TableCell align="right">{row.remarks}</TableCell>
+              <TableCell align="right">{row.physician}</TableCell>
             </TableRow>
           ))}
         </TableBody>
