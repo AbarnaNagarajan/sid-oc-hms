@@ -183,7 +183,7 @@ export default function DialogSelect() {
               >
                 Cancel
               </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <Button
                 onClick={() => setRedirectAppointment(true)}
                 style={{ background: "#3f51b5", color: "white" }}
