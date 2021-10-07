@@ -10,6 +10,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -173,19 +175,21 @@ export default function DialogSelect() {
             <Grid item xs={3}></Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button
-                onClick={() => setRedirectAppointment(true)}
-                style={{ background: "#3f51b5", color: "white" }}
-              >
-                Book
-              </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button
                 onClick={() => setRedirectAppointment(true)}
                 style={{ background: "brown", color: "white" }}
+                endIcon={<HighlightOffIcon />}
               >
                 Cancel
+              </Button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button
+                onClick={() => setRedirectAppointment(true)}
+                style={{ background: "#3f51b5", color: "white" }}
+                endIcon={<CheckCircleIcon />}
+              >
+                Book
               </Button>
             </Grid>
           </Grid>

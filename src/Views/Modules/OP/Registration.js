@@ -1,7 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, Grid, Container } from "@material-ui/core";
+import { TextField, Button, Grid } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,7 +122,7 @@ export default function BasicTextFields() {
   return (
     <div style={{ height: 550, width: "100%", background: "#fafafa" }}>
       <form noValidate autoComplete="off">
-        <Grid container spacing={1} style={{ padding: "25px", }}>
+        <Grid container spacing={1} style={{ padding: "25px" }}>
           <br />
           <label
             style={{
@@ -367,12 +369,18 @@ export default function BasicTextFields() {
             <Grid item xs={3}></Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button style={{ background: "brown", color: "white" }}>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button
+                style={{ background: "brown", color: "white" }}
+                endIcon={<HighlightOffIcon />}
+              >
                 Clear
               </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button style={{ background: "#3f51b5", color: "white" }}>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button
+                style={{ background: "#3f51b5", color: "white" }}
+                endIcon={<CheckCircleIcon />}
+              >
                 Submit
               </Button>
             </Grid>

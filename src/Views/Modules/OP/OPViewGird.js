@@ -18,6 +18,8 @@ import Button from "@material-ui/core/Button";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PatientDetails from "./OPView";
 import { Redirect } from "react-router";
+import DescriptionIcon from "@material-ui/icons/Description";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -415,6 +417,7 @@ export default function QuickFilteringGrid() {
             variant="outlined"
             color="secondary"
             onClick={() => openPatientDetailsDialog(rowDetails, params)}
+            startIcon={<DescriptionIcon />}
           >
             Details
           </Button>
@@ -435,6 +438,7 @@ export default function QuickFilteringGrid() {
             variant="outlined"
             color="primary"
             onClick={() => openRedirectAppointment(rowDetails, params)}
+            startIcon={<EventAvailableIcon />}
           >
             Book
           </Button>
