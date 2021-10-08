@@ -4,6 +4,8 @@ import { TextField, Button, Grid } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +110,7 @@ export default function BasicTextFields() {
   const [gender, setGender] = React.useState("0");
   const [bloodGroup, setbloodGroup] = React.useState("0");
   const [physician, setPhysicians] = React.useState("0");
-
+  const [redirectAppointment, setRedirectAppointment] = React.useState(false);
   const handleChange = (event, id) => {
     id === 1
       ? setmaritalStatus(event.target.value)
@@ -365,20 +367,43 @@ export default function BasicTextFields() {
             <div style={{ width: "100%", color: "#fff" }}>.</div>
           </Grid>
           <Grid container item xs={13} spacing={1}>
-            <Grid item xs={3}></Grid>
+            <Grid item xs={3}>
+              <Button
+                onClick={() => setRedirectAppointment(true)}
+                style={{
+                  background: "mediumseagreen",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
+                startIcon={<ArrowLeftIcon />}
+              >
+                To OP Grid
+              </Button>
+            </Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <Button
-                style={{ background: "brown", color: "white" }}
+                style={{
+                  background: "brown",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
                 endIcon={<HighlightOffIcon />}
               >
                 Clear
               </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <Button
-                style={{ background: "#3f51b5", color: "white" }}
+                style={{
+                  background: "#3f51b5",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
                 endIcon={<CheckCircleIcon />}
               >
                 Submit
@@ -386,6 +411,9 @@ export default function BasicTextFields() {
             </Grid>
           </Grid>
         </Grid>
+        {redirectAppointment ? (
+          <Redirect from="/Appointment" to="/OPGrid" />
+        ) : null}
       </form>
     </div>
   );

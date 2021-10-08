@@ -221,7 +221,7 @@ export default function PatientReports(patientDialogDetails) {
                             background: "brown",
                             color: "white",
                             textAlign: "right",
-                            fontWeight: "inherit",
+                            fontWeight: "bold",
                             fontFamily: "emoji",
                             fontSize: "small",
                           }}
@@ -244,7 +244,7 @@ export default function PatientReports(patientDialogDetails) {
                             background: "#3f51b5",
                             color: "white",
                             textAlign: "right",
-                            fontWeight: "inherit",
+                            fontWeight: "bold",
                             fontFamily: "emoji",
                             fontSize: "small",
                           }}
@@ -316,7 +316,7 @@ export default function PatientReports(patientDialogDetails) {
                             background: "brown",
                             color: "white",
                             textAlign: "right",
-                            fontWeight: "inherit",
+                            fontWeight: "bold",
                             fontFamily: "emoji",
                             fontSize: "small",
                           }}

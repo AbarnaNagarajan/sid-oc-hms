@@ -1,4 +1,4 @@
-import * as React from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(
 
 function QuickSearchToolbar(props) {
   const classes = useStyles();
-
+  const [redirectToRegistration, setRedirectToRegistration] = useState(false);
   return (
     <div className={classes.root}>
       <div>
@@ -99,10 +99,18 @@ function QuickSearchToolbar(props) {
           <GridToolbarExport />
           <GridToolbarFilterButton />
           <GridToolbarDensitySelector />
-          <Button size="small" color="primary" startIcon={<PersonAddIcon />}>
+          <Button
+            size="small"
+            color="primary"
+            startIcon={<PersonAddIcon />}
+            onClick={() => setRedirectToRegistration(true)}
+          >
             Add
           </Button>
         </GridToolbarContainer>
+        {redirectToRegistration ? (
+          <Redirect from="/OPGrid" to="/Register" />
+        ) : null}
       </div>
     </div>
   );
@@ -360,11 +368,11 @@ const dataRows = [
 ];
 
 export default function QuickFilteringGrid() {
-  const [searchText, setSearchText] = React.useState("");
-  const [rows, setRows] = React.useState(dataRows);
-  const [openPatientDetails, setOpenPatientDetails] = React.useState(false);
-  const [redirectAppointment, setRedirectAppointment] = React.useState(false);
-  const [patientDialogDetails, setPatientDialogDetails] = React.useState();
+  const [searchText, setSearchText] = useState("");
+  const [rows, setRows] = useState(dataRows);
+  const [openPatientDetails, setOpenPatientDetails] = useState(false);
+  const [redirectAppointment, setRedirectAppointment] = useState(false);
+  const [patientDialogDetails, setPatientDialogDetails] = useState();
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
     const searchRegex = new RegExp(escapeRegExp(searchValue), "i");
@@ -521,7 +529,7 @@ export default function QuickFilteringGrid() {
     setOpenPatientDetails(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setRows(dataRows);
   }, [dataRows]);
 

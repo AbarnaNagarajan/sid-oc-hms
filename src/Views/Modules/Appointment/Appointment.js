@@ -12,6 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -171,22 +172,43 @@ export default function DialogSelect() {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={3}></Grid>
+            <Grid item xs={3}>
+              <Button
+                onClick={() => setRedirectAppointment(true)}
+                style={{
+                  background: "mediumseagreen",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
+                startIcon={<ArrowLeftIcon />}
+              >
+                To OP Grid
+              </Button>
+            </Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;
               <Button
-                onClick={() => setRedirectAppointment(true)}
-                style={{ background: "brown", color: "white" }}
+                style={{
+                  background: "brown",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
                 endIcon={<HighlightOffIcon />}
               >
                 Cancel
               </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;
               <Button
-                onClick={() => setRedirectAppointment(true)}
-                style={{ background: "#3f51b5", color: "white" }}
+                style={{
+                  background: "#3f51b5",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontFamily: "emoji",
+                }}
                 endIcon={<CheckCircleIcon />}
               >
                 Book

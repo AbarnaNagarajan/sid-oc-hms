@@ -132,7 +132,13 @@ export default function PatientPrescription(patientDialogDetails) {
         <Grid item xs={3} className={classes.gridStyleL}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Button
-            style={{ background: "brown", color: "white", textAlign: "left" }}
+            style={{
+              background: "brown",
+              color: "white",
+              textAlign: "left",
+              fontWeight: "bold",
+              fontFamily: "emoji",
+            }}
             endIcon={<HighlightOffIcon />}
           >
             Clear
@@ -143,6 +149,8 @@ export default function PatientPrescription(patientDialogDetails) {
               background: "#3f51b5",
               color: "white",
               textAlign: "right",
+              fontWeight: "bold",
+              fontFamily: "emoji",
             }}
             endIcon={<CheckCircleIcon />}
           >
