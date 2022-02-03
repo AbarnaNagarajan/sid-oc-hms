@@ -7,6 +7,8 @@
 7. npm install react-select
 8. npm i mui-datatables
 9. npm install @material-ui/data-grid
+10. npm install '@mui/material'
+11. npm install ''@mui/lab'
 
 Download Git bash 
 

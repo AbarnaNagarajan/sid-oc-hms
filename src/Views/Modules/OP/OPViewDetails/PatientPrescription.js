@@ -64,8 +64,15 @@ export default function PatientPrescription(patientDialogDetails) {
   const classes = useStyles();
   const [physician, setPhysicians] = useState("0");
 
-  const handleChange = (event) => {
+  const handleChangePhysicians = (event) => {
     setPhysicians(event.target.value);
+  };
+  const handlePrescription = (event) => {
+    setPrescription(event.target.value);
+  };
+  const clearPrescriptionDetails = (event) => {
+    setPhysicians("0");
+    setPrescription("");
   };
 
   function createData(id, prescription, prescribedBy, prescribedDate) {
@@ -77,6 +84,8 @@ export default function PatientPrescription(patientDialogDetails) {
     createData(2, "Prescribe", "Dr.Anand", "2021-01-02"),
     createData(3, "Prescribe", "Dr.Anand", "2021-01-03"),
   ];
+
+  const [prescription, setPrescription] = useState("");
 
   return (
     <Grid container spacing={1} className={classes.patientPrescriptionGrid}>
@@ -97,6 +106,8 @@ export default function PatientPrescription(patientDialogDetails) {
             multiline
             style={{ width: "270px" }}
             rows={3}
+            value={prescription}
+            onChange={(e) => handlePrescription(e)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start"></InputAdornment>
@@ -111,7 +122,7 @@ export default function PatientPrescription(patientDialogDetails) {
             select
             label="Physician"
             value={physician}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangePhysicians(e)}
             SelectProps={{
               native: true,
             }}
@@ -140,6 +151,7 @@ export default function PatientPrescription(patientDialogDetails) {
               fontFamily: "emoji",
             }}
             endIcon={<HighlightOffIcon />}
+            onClick={clearPrescriptionDetails}
           >
             Clear
           </Button>

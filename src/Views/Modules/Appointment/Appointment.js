@@ -13,6 +13,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -48,13 +51,40 @@ const patientIds = [
   },
 ];
 
+const physicians = [
+  {
+    value: 0,
+    label: "Please Select",
+  },
+  {
+    value: 1,
+    label: "Dr. Anand R",
+  },
+  {
+    value: 2,
+    label: "Dr. Shyamala A",
+  },
+];
+
 export default function DialogSelect() {
   const classes = useStyles();
   const [redirectAppointment, setRedirectAppointment] = React.useState(false);
-  const [patientId, setPatientId] = React.useState("");
+  const [patientId, setPatientId] = React.useState("0");
+  const [physician, setPhysician] = React.useState("0");
+  const [remarks, setRemarks] = React.useState("");
+  const [appointmentDate, setAppointmentDate] = React.useState("");
   const dialogActionClass = { fontWeight: "bold", fontFamily: "initial" };
-  const handleChange = (event) => {
+  const handleChangePatientId = (event) => {
     setPatientId(event.target.value);
+  };
+  const handleChangePhysician = (event) => {
+    setPhysician(event.target.value);
+  };
+  const handleChangeRemarks = (event) => {
+    setRemarks(event.target.value);
+  };
+  const handleChangeAppointmentDate = (event) => {
+    setAppointmentDate(event.target.value);
   };
 
   function createData(
@@ -72,6 +102,13 @@ export default function DialogSelect() {
     createData("SOC02", "KitKat", "2021-01-03", "Follow Up", "Dr.Anand"),
     createData("SOC03", "Munch", "2021-01-02", "Follow Up", "Dr.Anand"),
   ];
+
+  const clearAppointmentDetails = (event) => {
+    setPatientId("0");
+    setPhysician("0");
+    setRemarks("");
+    setAppointmentDate("");
+  };
 
   return (
     <div style={{ height: 550, width: "100%", background: "#fafafa" }}>
@@ -99,16 +136,28 @@ export default function DialogSelect() {
             style={{ padding: "15px", background: "#d7f4ff" }}
           >
             <Grid item xs={3}>
-              <TextField
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="Date&Time picker"
+                value={appointmentDate}
+                onChange={(e) => handleChangeAppointmentDate(e)}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              </LocalizationProvider>
+              {/* <TextField
                 id="datetime-local"
                 label="Next appointment"
                 type="datetime-local"
-                defaultValue="2017-05-24T10:30"
+                defaultValue={new Date()}
+                format={"dd-MM-yyyy HH:mm"}
+                value={appointmentDate}
+                onChange={(e) => handleChangeAppointmentDate(e)}
                 className={classes.textField}
+                sx={{ width: 250 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
-              />
+              /> */}
             </Grid>
             <Grid item xs={3}>
               <TextField
@@ -117,7 +166,7 @@ export default function DialogSelect() {
                 select
                 label="Patient Id"
                 value={patientId}
-                onChange={(e) => handleChange(e, 1)}
+                onChange={(e) => handleChangePatientId(e, 1)}
                 SelectProps={{
                   native: true,
                 }}
@@ -139,6 +188,8 @@ export default function DialogSelect() {
               <TextField
                 variant="outlined"
                 label="Remarks"
+                value={remarks}
+                onChange={(e) => handleChangeRemarks(e)}
                 id="standard-start-adornment"
                 InputProps={{
                   startAdornment: (
@@ -153,15 +204,15 @@ export default function DialogSelect() {
                 id="standard-patient-id"
                 select
                 label="Physician"
-                value={patientId}
-                onChange={(e) => handleChange(e, 1)}
+                value={physician}
+                onChange={(e) => handleChangePhysician(e, 1)}
                 SelectProps={{
                   native: true,
                 }}
                 style={{ width: "230px" }}
                 helperText=""
               >
-                {patientIds.map((option) => (
+                {physicians.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -198,6 +249,7 @@ export default function DialogSelect() {
                   fontFamily: "emoji",
                 }}
                 endIcon={<HighlightOffIcon />}
+                onClick={clearAppointmentDetails}
               >
                 Cancel
               </Button>
