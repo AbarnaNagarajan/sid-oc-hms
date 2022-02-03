@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import { Redirect } from "react-router";
 import { Grid } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
@@ -9,13 +8,13 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import TextField from '@mui/material/TextField';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -72,8 +71,9 @@ export default function DialogSelect() {
   const [patientId, setPatientId] = React.useState("0");
   const [physician, setPhysician] = React.useState("0");
   const [remarks, setRemarks] = React.useState("");
-  const [appointmentDate, setAppointmentDate] = React.useState("");
   const dialogActionClass = { fontWeight: "bold", fontFamily: "initial" };
+  const [appointmentDate, setAppointmentDate] = React.useState();
+
   const handleChangePatientId = (event) => {
     setPatientId(event.target.value);
   };
@@ -84,7 +84,7 @@ export default function DialogSelect() {
     setRemarks(event.target.value);
   };
   const handleChangeAppointmentDate = (event) => {
-    setAppointmentDate(event.target.value);
+    setAppointmentDate(event);
   };
 
   function createData(
@@ -107,7 +107,7 @@ export default function DialogSelect() {
     setPatientId("0");
     setPhysician("0");
     setRemarks("");
-    setAppointmentDate("");
+    setAppointmentDate();
   };
 
   return (
@@ -131,33 +131,19 @@ export default function DialogSelect() {
           <Grid
             container
             item
-            xs={13}
+            xs={12}
             spacing={1}
             style={{ padding: "15px", background: "#d7f4ff" }}
           >
             <Grid item xs={3}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                label="Date&Time picker"
-                value={appointmentDate}
-                onChange={(e) => handleChangeAppointmentDate(e)}
-                renderInput={(params) => <TextField {...params} />}
-              />
+                <DateTimePicker
+                  label="Appointment Date Time"
+                  value={appointmentDate}
+                  onChange={handleChangeAppointmentDate}
+                  renderInput={(params) => <TextField {...params} />}
+                />
               </LocalizationProvider>
-              {/* <TextField
-                id="datetime-local"
-                label="Next appointment"
-                type="datetime-local"
-                defaultValue={new Date()}
-                format={"dd-MM-yyyy HH:mm"}
-                value={appointmentDate}
-                onChange={(e) => handleChangeAppointmentDate(e)}
-                className={classes.textField}
-                sx={{ width: 250 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              /> */}
             </Grid>
             <Grid item xs={3}>
               <TextField
@@ -186,15 +172,11 @@ export default function DialogSelect() {
             </Grid>
             <Grid item xs={3}>
               <TextField
-                variant="outlined"
-                label="Remarks"
                 value={remarks}
                 onChange={(e) => handleChangeRemarks(e)}
-                id="standard-start-adornment"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start"></InputAdornment>
-                  ),
+                label="Remarks"
+                InputLabelProps={{
+                  shrink: true,
                 }}
               />
             </Grid>
@@ -267,10 +249,10 @@ export default function DialogSelect() {
               </Button>
             </Grid>
           </Grid>
-          <Grid container item xs={13} spacing={1}>
+          <Grid container item xs={12} spacing={1}>
             <div style={{ width: "100%", color: "#fff" }}>.</div>
           </Grid>
-          <Grid container item xs={13} spacing={1}>
+          <Grid container item xs={12} spacing={1}>
             <label
               style={{
                 fontSize: "20px",

@@ -114,6 +114,7 @@ export default function PatientReports(patientDialogDetails) {
   function onFileChangeEPOD(event, uploadid, lrid, id, podfilepath) {
     try {
       if (event.target.files.length > 0) {
+        setimageurl(event.target.value);
       }
     } catch (err) {
       console.log("onFileChangeEPOD", err);
@@ -134,6 +135,11 @@ export default function PatientReports(patientDialogDetails) {
     setReports(event.target.value);
   };
 
+  const clearReportDetails = (event) => {
+    setReports("0");
+    setimageurl("");
+  };
+
   return (
     <Grid container spacing={1} className={classes.divStyle}>
       <br />
@@ -149,122 +155,124 @@ export default function PatientReports(patientDialogDetails) {
             <TableBody>
               {EpodUploadCount && EpodUploadCount.length > 0
                 ? EpodUploadCount.map((ls, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCellUpload align="left">
-                        <label></label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <img
-                          className={classes.imgStyle}
-                          id={"epodImg"}
-                          src={noimage}
-                          onClick={(e) => viewfile(noimage)}
-                          alt=""
-                          key={ls.uploadid}
-                        />
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <TextField
-                          variant="outlined"
-                          id="standard-report"
-                          select
-                          label="Reports"
-                          value={report}
-                          onChange={(e) => handleChange(e)}
-                          SelectProps={{
-                            native: true,
-                          }}
-                          style={{ width: "100px" }}
-                          helperText=""
-                        >
-                          {reports.map((option) => (
-                            <option
-                              key={option.value}
-                              value={option.value}
-                              style={{ width: "230px", fontSize: "small" }}
-                            >
-                              {option.label}
-                            </option>
-                          ))}
-                        </TextField>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload
-                        align="left"
-                        style={{ width: "105px" }}
+                  <StyledTableRow key={index}>
+                    <StyledTableCellUpload align="left">
+                      <label></label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <img
+                        className={classes.imgStyle}
+                        id={"epodImg"}
+                        src={noimage}
+                        onClick={(e) => viewfile(noimage)}
+                        alt=""
+                        key={ls.uploadid}
+                      />
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <TextField
+                        variant="outlined"
+                        id="standard-report"
+                        select
+                        label="Reports"
+                        value={report}
+                        onChange={(e) => handleChange(e)}
+                        SelectProps={{
+                          native: true,
+                        }}
+                        style={{ width: "100px" }}
+                        helperText=""
                       >
-                        <input
-                          type="file"
-                          accept="image/png, image/jpeg, image/jpg"
-                          id={"epodupload" + index}
-                          key={index}
-                          onChange={(e) =>
-                            onFileChangeEPOD(
-                              e,
-                              ls.uploadid,
-                              ls.Lrid,
-                              ls.Id,
-                              ls.podfilepath
-                            )
-                          }
-                        />
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <label></label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload
-                        align="left"
-                        style={{ width: "290px" }}
+                        {reports.map((option) => (
+                          <option
+                            key={option.value}
+                            value={option.value}
+                            style={{ width: "230px", fontSize: "small" }}
+                          >
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload
+                      align="left"
+                      style={{ width: "105px" }}
+                    >
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg"
+                        id={"epodupload" + index}
+                        key={index}
+                        value={imageurl}
+                        onChange={(e) =>
+                          onFileChangeEPOD(
+                            e,
+                            ls.uploadid,
+                            ls.Lrid,
+                            ls.Id,
+                            ls.podfilepath
+                          )
+                        }
+                      />
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <label></label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload
+                      align="left"
+                      style={{ width: "290px" }}
+                    >
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Button
+                        style={{
+                          background: "brown",
+                          color: "white",
+                          textAlign: "right",
+                          fontWeight: "bold",
+                          fontFamily: "emoji",
+                          fontSize: "small",
+                        }}
+                        onClick={(e) =>
+                          EPODfileDelete(
+                            e,
+                            ls.uploadid,
+                            ls.Lrid,
+                            ls.Id,
+                            ls.podfilepath
+                          )
+                        }
+                        endIcon={<HighlightOffIcon />}
+                        onClick={clearReportDetails}
                       >
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button
-                          style={{
-                            background: "brown",
-                            color: "white",
-                            textAlign: "right",
-                            fontWeight: "bold",
-                            fontFamily: "emoji",
-                            fontSize: "small",
-                          }}
-                          onClick={(e) =>
-                            EPODfileDelete(
-                              e,
-                              ls.uploadid,
-                              ls.Lrid,
-                              ls.Id,
-                              ls.podfilepath
-                            )
-                          }
-                          endIcon={<HighlightOffIcon />}
-                        >
-                          Cancel
-                        </Button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button
-                          style={{
-                            background: "#3f51b5",
-                            color: "white",
-                            textAlign: "right",
-                            fontWeight: "bold",
-                            fontFamily: "emoji",
-                            fontSize: "small",
-                          }}
-                          onClick={(e) =>
-                            EPODfileDelete(
-                              e,
-                              ls.uploadid,
-                              ls.Lrid,
-                              ls.Id,
-                              ls.podfilepath
-                            )
-                          }
-                          endIcon={<CloudUploadIcon/>}
-                        >
-                          Upload
-                        </Button>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left"></StyledTableCellUpload>
-                    </StyledTableRow>
-                  ))
+                        Cancel
+                      </Button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Button
+                        style={{
+                          background: "#3f51b5",
+                          color: "white",
+                          textAlign: "right",
+                          fontWeight: "bold",
+                          fontFamily: "emoji",
+                          fontSize: "small",
+                        }}
+                        onClick={(e) =>
+                          EPODfileDelete(
+                            e,
+                            ls.uploadid,
+                            ls.Lrid,
+                            ls.Id,
+                            ls.podfilepath
+                          )
+                        }
+                        endIcon={<CloudUploadIcon />}
+                      >
+                        Upload
+                      </Button>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left"></StyledTableCellUpload>
+                  </StyledTableRow>
+                ))
                 : null}
             </TableBody>
           </Table>
@@ -282,60 +290,60 @@ export default function PatientReports(patientDialogDetails) {
             <TableBody>
               {EpodUploadCount && EpodUploadCount.length > 0
                 ? EpodUploadCount.map((ls, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCellUpload align="left">
-                        <label className={classes.imgLabel}>1</label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <img
-                          className={classes.imgStyle}
-                          id={"epodImg"}
-                          src={noimage}
-                          onClick={(e) => viewfile(noimage)}
-                          alt=""
-                          key={ls.uploadid}
-                        />
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <label className={classes.imgLabel}>X-ray Report</label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <label className={classes.imgLabel}>Uploaded By</label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload align="left">
-                        <label className={classes.imgLabel}>
-                          Uploaded Date Time
-                        </label>
-                      </StyledTableCellUpload>
-                      <StyledTableCellUpload
-                        align="left"
-                        style={{ width: "250px" }}
+                  <StyledTableRow key={index}>
+                    <StyledTableCellUpload align="left">
+                      <label className={classes.imgLabel}>1</label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <img
+                        className={classes.imgStyle}
+                        id={"epodImg"}
+                        src={noimage}
+                        onClick={(e) => viewfile(noimage)}
+                        alt=""
+                        key={ls.uploadid}
+                      />
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <label className={classes.imgLabel}>X-ray Report</label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <label className={classes.imgLabel}>Uploaded By</label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload align="left">
+                      <label className={classes.imgLabel}>
+                        Uploaded Date Time
+                      </label>
+                    </StyledTableCellUpload>
+                    <StyledTableCellUpload
+                      align="left"
+                      style={{ width: "250px" }}
+                    >
+                      <Button
+                        style={{
+                          background: "brown",
+                          color: "white",
+                          textAlign: "right",
+                          fontWeight: "bold",
+                          fontFamily: "emoji",
+                          fontSize: "small",
+                        }}
+                        onClick={(e) =>
+                          EPODfileDelete(
+                            e,
+                            ls.uploadid,
+                            ls.Lrid,
+                            ls.Id,
+                            ls.podfilepath
+                          )
+                        }
+                        endIcon={<DeleteForeverIcon />}
                       >
-                        <Button
-                          style={{
-                            background: "brown",
-                            color: "white",
-                            textAlign: "right",
-                            fontWeight: "bold",
-                            fontFamily: "emoji",
-                            fontSize: "small",
-                          }}
-                          onClick={(e) =>
-                            EPODfileDelete(
-                              e,
-                              ls.uploadid,
-                              ls.Lrid,
-                              ls.Id,
-                              ls.podfilepath
-                            )
-                          }
-                          endIcon = {<DeleteForeverIcon/>}
-                        >
-                          Delete
-                        </Button>
-                      </StyledTableCellUpload>
-                    </StyledTableRow>
-                  ))
+                        Delete
+                      </Button>
+                    </StyledTableCellUpload>
+                  </StyledTableRow>
+                ))
                 : null}
             </TableBody>
           </Table>

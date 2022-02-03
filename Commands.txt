@@ -8,7 +8,9 @@
 8. npm i mui-datatables
 9. npm install @material-ui/data-grid
 10. npm install '@mui/material'
-11. npm install ''@mui/lab'
+11. npm install '@mui/lab'
+12. npm i @emotion/styled
+13. npm install date-fns --save
 
 Download Git bash 
 
