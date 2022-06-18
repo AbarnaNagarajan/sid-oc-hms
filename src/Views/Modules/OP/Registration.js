@@ -91,7 +91,7 @@ const physicians = [
   },
   {
     value: 2,
-    label: "Dr. Shyamala A",
+    label: "Dr. Shyamala",
   },
 ];
 
@@ -108,6 +108,9 @@ export default function BasicTextFields() {
   const [altMobileNo, setAltMobileNo] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [complication, setComplication] = React.useState("");
+  const [registrationMsg, setRegistrationMsg] = React.useState("");
+  const [registrationMsgColor, setRegistrationMsgColor] = React.useState("red");
+  const [onRegFormSubmit, setOnRegFormSubmit] = React.useState(false);
 
   const handleChange = (event, id) => {
     id === 1
@@ -134,6 +137,7 @@ export default function BasicTextFields() {
   };
 
   const clearRegistrationDetails = (event) => {
+    event.preventDefault();
     setmaritalStatus("0");
     setGender("0");
     setbloodGroup("0");
@@ -145,6 +149,29 @@ export default function BasicTextFields() {
     setAltMobileNo("");
     setAddress("");
     setComplication("");
+    setRegistrationMsg("");
+    setOnRegFormSubmit(false);
+  };
+
+  const onSubmitRegistration = (event) => {
+    event.preventDefault();
+    if ((firstName === undefined || firstName === null || firstName === "") ||
+      (age === undefined || age === null || age === "") ||
+      (mobileNo === undefined || mobileNo === null || mobileNo === "") ||
+      (altMobileNo === undefined || altMobileNo === null || altMobileNo === "") ||
+      (gender === undefined || gender === null || gender === "0") ||
+      (address === undefined || address === null || address === "") ||
+      (complication === undefined || complication === null || complication === "") ||
+      (bloodGroup === undefined || bloodGroup === null || bloodGroup === "0")) {
+      setRegistrationMsg("Please fill the required* fields!!");
+      setRegistrationMsgColor("red");
+      setOnRegFormSubmit(true);
+    }
+    else {
+      setRegistrationMsg("Registration done successfully!!");
+      setRegistrationMsgColor("darkblue");
+      setOnRegFormSubmit(true);
+    }
   };
 
   return (
@@ -181,13 +208,19 @@ export default function BasicTextFields() {
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="First Name"
+                label="First Name *"
                 id="standard-start-adornment"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={firstName}
                 onChange={(e) => handleChange(e, 5)}
+                error={firstName === "" && onRegFormSubmit}
+              // helperText={
+              //   firstName === "" && onRegFormSubmit
+              //     ? "First Name is required!"
+              //     : " "
+              // }
               />
             </Grid>
             <Grid item xs={3}>
@@ -205,25 +238,46 @@ export default function BasicTextFields() {
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="Age"
+                label="Age *"
+                type="number"
                 id="standard-start-adornment"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={age}
+                error={age === "" && onRegFormSubmit}
                 onChange={(e) => handleChange(e, 7)}
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                }}
+                min={1}
+              // helperText={
+              //   age === "" && onRegFormSubmit
+              //     ? "Age is required!"
+              //     : " "
+              // }
               />
             </Grid>
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="Mobile Number"
+                label="Mobile Number *"
                 id="standard-start-adornment"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={mobileNo}
+                error={mobileNo === "" && onRegFormSubmit}
                 onChange={(e) => handleChange(e, 8)}
+                type="number"
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                }}
+              // helperText={
+              //   mobileNo === "" && onRegFormSubmit
+              //     ? "Mobile Number is required!"
+              //     : " "
+              // }
               />
             </Grid>
           </Grid>
@@ -234,13 +288,23 @@ export default function BasicTextFields() {
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="Alt. Contact Number"
+                label="Alt. Contact Number *"
                 id="standard-start-adornment"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={altMobileNo}
+                error={altMobileNo === "" && onRegFormSubmit}
                 onChange={(e) => handleChange(e, 9)}
+                type="number"
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                }}
+              // helperText={
+              //   altMobileNo === "" && onRegFormSubmit
+              //     ? "Alt. Contact Number is required!"
+              //     : " "
+              // }
               />
             </Grid>
             <Grid item xs={3}>
@@ -273,14 +337,19 @@ export default function BasicTextFields() {
                 variant="outlined"
                 id="standard-gender-status"
                 select
-                label="Gender"
+                label="Gender *"
                 value={gender}
                 onChange={(e) => handleChange(e, 2)}
                 SelectProps={{
                   native: true,
                 }}
                 style={{ width: "230px" }}
-                helperText=""
+                error={gender === "0" && onRegFormSubmit}
+              // helperText={
+              //   gender === "0" && onRegFormSubmit
+              //     ? "Gender is required!"
+              //     : " "
+              // }
               >
                 {genders.map((option) => (
                   <option
@@ -296,7 +365,7 @@ export default function BasicTextFields() {
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="Address"
+                label="Address *"
                 id="standard-start-adornment"
                 multiline
                 style={{ width: "230px" }}
@@ -306,6 +375,12 @@ export default function BasicTextFields() {
                 }}
                 value={address}
                 onChange={(e) => handleChange(e, 10)}
+                error={address === "" && onRegFormSubmit}
+              // helperText={
+              //   address === "" && onRegFormSubmit
+              //     ? "Address is required!"
+              //     : " "
+              // }
               />
             </Grid>
           </Grid>
@@ -325,13 +400,19 @@ export default function BasicTextFields() {
             <Grid item xs={3}>
               <TextField
                 variant="outlined"
-                label="Complication"
+                label="Complication *"
                 id="standard-start-adornment"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={complication}
                 onChange={(e) => handleChange(e, 11)}
+                error={complication === "" && onRegFormSubmit}
+              // helperText={
+              //   complication === "" && onRegFormSubmit
+              //     ? "Complication is required!"
+              //     : " "
+              // }
               />
             </Grid>
             <Grid item xs={3}>
@@ -339,7 +420,7 @@ export default function BasicTextFields() {
                 variant="outlined"
                 id="standard-blood-group"
                 select
-                label="Blood Group"
+                label="Blood Group  *"
                 value={bloodGroup}
                 onChange={(e) => handleChange(e, 3)}
                 SelectProps={{
@@ -347,6 +428,12 @@ export default function BasicTextFields() {
                 }}
                 style={{ width: "230px" }}
                 helperText=""
+                error={bloodGroup === "0" && onRegFormSubmit}
+              // helperText={
+              //   bloodGroup === "0" && onRegFormSubmit
+              //     ? "Blood Group is required!"
+              //     : " "
+              // }
               >
                 {bloodGroups.map((option) => (
                   <option
@@ -407,7 +494,20 @@ export default function BasicTextFields() {
                 To OP Grid
               </Button>
             </Grid>
-            <Grid item xs={3}></Grid>
+            <Grid item xs={3}>
+              <label
+                style={{
+                  fontSize: "20px",
+                  padding: "4px 4px 0px",
+                  flex: "1 1 100%",
+                  fontWeight: "bolder",
+                  fontFamily: "serif",
+                  color: registrationMsgColor
+                }}
+              >
+                {registrationMsg}
+              </label>
+            </Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
               &nbsp;&nbsp;&nbsp;&nbsp;
@@ -432,6 +532,7 @@ export default function BasicTextFields() {
                   fontFamily: "emoji",
                 }}
                 endIcon={<CheckCircleIcon />}
+                onClick={onSubmitRegistration}
               >
                 Submit
               </Button>
@@ -440,9 +541,6 @@ export default function BasicTextFields() {
         </Grid>
         {redirectAppointment ? (
           <Redirect from="/Appointment" to="/OPGrid" />
-        ) : null}
-        {showConfirationPopUp ? (
-          <ConfirmationDialog/>
         ) : null}
       </form>
     </div>

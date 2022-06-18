@@ -186,11 +186,11 @@ function Login() {
                   name="UserName"
                   value={loginData.UserName}
                   onChange={onLoginCredentialsChange}
-                  helperText={
-                    loginData.UserName === "" && onFormSubmit
-                      ? "Username is required!"
-                      : " "
-                  }
+                  // helperText={
+                  //   loginData.UserName === "" && onFormSubmit
+                  //     ? "Username is required!"
+                  //     : " "
+                  // }
                 />
               </Grid>
               <Grid item xs={12}></Grid>
@@ -215,11 +215,11 @@ function Login() {
                   name="Password"
                   value={loginData.Password}
                   onChange={onLoginCredentialsChange}
-                  helperText={
-                    loginData.Password === "" && onFormSubmit
-                      ? "Password is required!"
-                      : " "
-                  }
+                  // helperText={
+                  //   loginData.Password === "" && onFormSubmit
+                  //     ? "Password is required!"
+                  //     : " "
+                  // }
                 />
               </Grid>
               <Grid item xs={12}>

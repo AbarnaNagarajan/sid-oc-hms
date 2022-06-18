@@ -61,7 +61,7 @@ const physicians = [
   },
   {
     value: 2,
-    label: "Dr. Shyamala A",
+    label: "Dr. Shyamala",
   },
 ];
 
@@ -72,7 +72,10 @@ export default function DialogSelect() {
   const [physician, setPhysician] = React.useState("0");
   const [remarks, setRemarks] = React.useState("");
   const dialogActionClass = { fontWeight: "bold", fontFamily: "initial" };
-  const [appointmentDate, setAppointmentDate] = React.useState();
+  const [appointmentDate, setAppointmentDate] = React.useState(new Date());
+  const [appMsg, setAppMsg] = React.useState("");
+  const [appMsgColor, setAppMsgColor] = React.useState("red");
+  const [onAppFormSubmit, setOnAppFormSubmit] = React.useState(false);
 
   const handleChangePatientId = (event) => {
     setPatientId(event.target.value);
@@ -82,9 +85,6 @@ export default function DialogSelect() {
   };
   const handleChangeRemarks = (event) => {
     setRemarks(event.target.value);
-  };
-  const handleChangeAppointmentDate = (event) => {
-    setAppointmentDate(event);
   };
 
   function createData(
@@ -104,10 +104,38 @@ export default function DialogSelect() {
   ];
 
   const clearAppointmentDetails = (event) => {
+    event.preventDefault();
     setPatientId("0");
     setPhysician("0");
     setRemarks("");
-    setAppointmentDate();
+    setAppointmentDate(new Date());
+    setAppMsg("");
+    setOnAppFormSubmit(false);
+  };
+
+  const onSubmitAppointment = (event) => {
+    event.preventDefault();
+    if ((appointmentDate === undefined || appointmentDate === null || appointmentDate === "")) {
+      setAppMsg("Appointment date is required!!");
+      setAppMsgColor("red");
+      setOnAppFormSubmit(true);
+    }
+    // else if ((appointmentDate < new Date())) {
+    //   setAppMsg("Appointment date should be greater!!");
+    //   setAppMsgColor("red");
+    //   setOnAppFormSubmit(true);
+    // }
+    else if ((patientId === undefined || patientId === null || patientId === "0") ||
+      (physician === undefined || physician === null || physician === "0")) {
+      setAppMsg("Please fill the required* fields!!");
+      setAppMsgColor("red");
+      setOnAppFormSubmit(true);
+    }
+    else {
+      setAppMsg("Appointment done successfully!!");
+      setAppMsgColor("darkblue");
+      setOnAppFormSubmit(true);
+    }
   };
 
   return (
@@ -138,10 +166,12 @@ export default function DialogSelect() {
             <Grid item xs={3}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
-                  label="Appointment Date Time"
+                  label="Appointment Date Time*"
                   value={appointmentDate}
-                  onChange={handleChangeAppointmentDate}
+                  onChange={(newAppointmentDate) => { setAppointmentDate(newAppointmentDate); }}
                   renderInput={(params) => <TextField {...params} />}
+                  minDateTime={new Date()}
+                  minTime={new Date().getTime()}
                 />
               </LocalizationProvider>
             </Grid>
@@ -150,7 +180,7 @@ export default function DialogSelect() {
                 variant="outlined"
                 id="standard-patient-id"
                 select
-                label="Patient Id"
+                label="Patient Id*"
                 value={patientId}
                 onChange={(e) => handleChangePatientId(e, 1)}
                 SelectProps={{
@@ -158,6 +188,7 @@ export default function DialogSelect() {
                 }}
                 style={{ width: "230px" }}
                 helperText=""
+                error={patientId === "0" && onAppFormSubmit}
               >
                 {patientIds.map((option) => (
                   <option
@@ -185,7 +216,7 @@ export default function DialogSelect() {
                 variant="outlined"
                 id="standard-patient-id"
                 select
-                label="Physician"
+                label="Physician*"
                 value={physician}
                 onChange={(e) => handleChangePhysician(e, 1)}
                 SelectProps={{
@@ -193,6 +224,7 @@ export default function DialogSelect() {
                 }}
                 style={{ width: "230px" }}
                 helperText=""
+                error={physician === "0" && onAppFormSubmit}
               >
                 {physicians.map((option) => (
                   <option
@@ -219,7 +251,20 @@ export default function DialogSelect() {
                 To OP Grid
               </Button>
             </Grid>
-            <Grid item xs={3}></Grid>
+            <Grid item xs={3}>
+              <label
+                style={{
+                  fontSize: "20px",
+                  padding: "4px 4px 0px",
+                  flex: "1 1 100%",
+                  fontWeight: "bolder",
+                  fontFamily: "serif",
+                  color: appMsgColor
+                }}
+              >
+                {appMsg}
+              </label>
+            </Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}>
               &nbsp;&nbsp;&nbsp;
@@ -244,6 +289,7 @@ export default function DialogSelect() {
                   fontFamily: "emoji",
                 }}
                 endIcon={<CheckCircleIcon />}
+                onClick={onSubmitAppointment}
               >
                 Book
               </Button>

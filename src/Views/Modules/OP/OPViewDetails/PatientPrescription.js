@@ -56,13 +56,16 @@ const physicians = [
   },
   {
     value: 2,
-    label: "Dr. Shyamala A",
+    label: "Dr. Shyamala",
   },
 ];
 
 export default function PatientPrescription(patientDialogDetails) {
   const classes = useStyles();
   const [physician, setPhysicians] = useState("0");
+  const [prescribeMsg, setPrescribeMsg] = useState("");
+  const [prescribeMsgColor, setPrescribeMsgColor] = useState("red");
+  const [onPrescribeFormSubmit, setOnPrescribeFormSubmit] = useState(false);
 
   const handleChangePhysicians = (event) => {
     setPhysicians(event.target.value);
@@ -71,8 +74,25 @@ export default function PatientPrescription(patientDialogDetails) {
     setPrescription(event.target.value);
   };
   const clearPrescriptionDetails = (event) => {
+    event.preventDefault();
     setPhysicians("0");
     setPrescription("");
+    setPrescribeMsg("");
+    setOnPrescribeFormSubmit(false);
+  };
+  const submitPrescriptionDetails = (event) => {
+    event.preventDefault();
+    if ((prescription === undefined || prescription === null || prescription === "") ||
+      (physician === undefined || physician === null || physician === "0")) {
+      setPrescribeMsg("Please fill the required* fields!!");
+      setPrescribeMsgColor("red");
+      setOnPrescribeFormSubmit(true);
+    }
+    else {
+      setPrescribeMsg("Prescription details saved successfully!!");
+      setPrescribeMsgColor("blue");
+      setOnPrescribeFormSubmit(true);
+    }
   };
 
   function createData(id, prescription, prescribedBy, prescribedDate) {
@@ -101,18 +121,23 @@ export default function PatientPrescription(patientDialogDetails) {
         <Grid item xs={3} className={classes.gridStyleL}>
           <TextField
             variant="outlined"
-            label="Precription"
+            label="Precription*"
             id="standard-start-adornment"
             multiline
             style={{ width: "270px" }}
             rows={3}
             value={prescription}
-            onChange={(e) => handlePrescription(e)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start"></InputAdornment>
-              ),
+            InputLabelProps={{
+              shrink: true,
             }}
+            onChange={(e) => handlePrescription(e)}
+            // InputProps={{
+            //   startAdornment: (
+            //     <InputAdornment position="start"></InputAdornment>
+            //   ),
+            // }}
+            helperText=""
+            error={prescription === "" && onPrescribeFormSubmit}
           />
         </Grid>
         <Grid item xs={3} className={classes.gridStyleR}>
@@ -120,7 +145,7 @@ export default function PatientPrescription(patientDialogDetails) {
             variant="outlined"
             id="standard-physician"
             select
-            label="Physician"
+            label="Physician*"
             value={physician}
             onChange={(e) => handleChangePhysicians(e)}
             SelectProps={{
@@ -128,6 +153,7 @@ export default function PatientPrescription(patientDialogDetails) {
             }}
             style={{ width: "270px" }}
             helperText=""
+            error={physician === "0" && onPrescribeFormSubmit}
           >
             {physicians.map((option) => (
               <option
@@ -165,11 +191,25 @@ export default function PatientPrescription(patientDialogDetails) {
               fontFamily: "emoji",
             }}
             endIcon={<CheckCircleIcon />}
+            onClick={submitPrescriptionDetails}
           >
             Submit
           </Button>
         </Grid>
       </Grid>
+      <label
+        style={{
+          fontSize: "20px",
+          padding: "4px 4px 0px",
+          flex: "1 1 100%",
+          fontWeight: "bolder",
+          fontFamily: "serif",
+          color: prescribeMsgColor,
+          textAlign: "center"
+        }}
+      >
+        {prescribeMsg}
+      </label>
       <label className={classes.labelDesign}>Prescription History</label>
       <Table aria-label="caption table">
         {/* <caption>A basic table example with a caption</caption> */}

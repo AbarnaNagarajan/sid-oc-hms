@@ -103,6 +103,9 @@ export default function PatientReports(patientDialogDetails) {
       label: "Scan Report",
     },
   ];
+  const [uploadReportsMsg, setUploadReportsMsg] = useState("");
+  const [uploadReportsMsgColor, setUploadReportsMsgColor] = useState("red");
+  const [onUploadReportsFormSubmit, setOnUploadReportsFormSubmit] = useState(false);
 
   function EPODfileDelete(e, uploadid, Lrid, Id) {
     try {
@@ -136,14 +139,46 @@ export default function PatientReports(patientDialogDetails) {
   };
 
   const clearReportDetails = (event) => {
+    event.preventDefault();
     setReports("0");
     setimageurl("");
+    setUploadReportsMsg("");
+    setOnUploadReportsFormSubmit(false);
+  };
+
+  const onUploadReports = (event) => {
+    event.preventDefault();
+    if ((imageurl === undefined || imageurl === null || imageurl === "") ||
+      (report === undefined || report === null || report === "0")) {
+      setUploadReportsMsg("Please fill the required* fields!!");
+      setUploadReportsMsgColor("red");
+      setOnUploadReportsFormSubmit(true);
+    }
+    else {
+      setUploadReportsMsg("Reports uploaded successfully!!");
+      setUploadReportsMsgColor("blue");
+      setOnUploadReportsFormSubmit(true);
+    }
   };
 
   return (
     <Grid container spacing={1} className={classes.divStyle}>
       <br />
       <label className={classes.labelDesign}>Upload New Report</label>
+      <br />
+      <label
+        style={{
+          fontSize: "20px",
+          padding: "4px 4px 0px",
+          flex: "1 1 100%",
+          fontWeight: "bolder",
+          fontFamily: "serif",
+          color: uploadReportsMsgColor,
+          textAlign: "center"
+        }}
+      >
+        {uploadReportsMsg}
+      </label>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Grid container item xs={12} spacing={1}>
         <TableContainer
@@ -174,7 +209,7 @@ export default function PatientReports(patientDialogDetails) {
                         variant="outlined"
                         id="standard-report"
                         select
-                        label="Reports"
+                        label="Reports*"
                         value={report}
                         onChange={(e) => handleChange(e)}
                         SelectProps={{
@@ -242,7 +277,6 @@ export default function PatientReports(patientDialogDetails) {
                           )
                         }
                         endIcon={<HighlightOffIcon />}
-                        onClick={clearReportDetails}
                       >
                         Cancel
                       </Button>
